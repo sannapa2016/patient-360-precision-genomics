@@ -1,33 +1,35 @@
-# Load clinical libraries
-library(survival)
-library(survminer)
-library(dplyr)
+# 1. INSTALLATION (Run these once to download the packages to your computer)
+if(!require(survival)) install.packages("survival")
+if(!require(survminer)) install.packages("survminer")
 
-# 1. Load data from Snowflake (simulated here)
-df <- read.csv("precision_genomics_data.csv")
+# 2. LOADING (Run these every time you open RStudio to activate the functions)
+library(survival)   # Loads Surv() and survfit()
+library(survminer)  # Loads ggsurvplot() - Fixes the error in {ED80DF95-BA54-4A08-87D9-D1BDBEBA86C1}.png
 
-# 2. Define the Survival Object
-# We analyze 'Time to Treatment Success' across different genetic variants
-surv_obj <- Surv(time = df$days_to_treatment, event = df$event_observed)
+# 3. DATA PREPARATION
+# Synthetic dataset linking genomic variants to treatment days
+df <- data.frame(
+  patient_id = 1:10,
+  days_to_event = c(120, 150, 30, 200, 180, 45, 250, 90, 300, 60),
+  event_status = c(1, 1, 1, 0, 1, 1, 0, 1, 0, 1), # 1 = failure/event, 0 = censored
+  biomarker = c("KRAS-G12C", "KRAS-G12C", "WT", "KRAS-G12C", "KRAS-G12C", 
+                "WT", "KRAS-G12C", "WT", "KRAS-G12C", "WT")
+)
 
-# 3. Fit Kaplan-Meier Curve by Biomarker Variant
-fit <- survfit(surv_obj ~ biomarker_variant, data = df)
+# 4. MODELING
+# Create survival object and fit the Kaplan-Meier model
+km_fit <- survfit(Surv(days_to_event, event_status) ~ biomarker, data = df)
 
-# 4. Visualize the "Patient-360" Survival Impact
-ggsurvplot(fit, 
-           data = df, 
-           pval = TRUE, 
-           conf.int = TRUE,
-           risk.table = TRUE, 
-           title = "Treatment Durability by Genetic Variant",
-           xlab = "Days on Therapy",
-           ylab = "Survival Probability",
-           palette = c("#E7B800", "#2E9FDF"))
-library(survival)
-library(survminer)
-
-# Fit Kaplan-Meier Curve by Genetic Variant
-fit <- survfit(Surv(days_to_treatment, event_observed) ~ biomarker_variant, data = df)
-
-# Visualize the Clinical Outcome
-ggsurvplot(fit, data = df, pval = TRUE, title = "Treatment Durability by Mutation Type")
+# 5. VISUALIZATION
+# This generates the final plot in the 'Plots' tab
+ggsurvplot(
+  km_fit, 
+  data = df, 
+  pval = TRUE,             # Statistical significance
+  risk.table = TRUE,       # Standard clinical trial 'At Risk' table
+  title = "Patient-360: Treatment Durability by Biomarker",
+  xlab = "Days on Therapy",
+  ylab = "Survival Probability",
+  palette = c("#E7B800", "#2E9FDF"),
+  ggtheme = theme_minimal()
+)
