@@ -24,3 +24,17 @@ SELECT
     DATEDIFF('day', diagnosis_date, treatment_start_date) as days_to_treatment,
     event_observed -- 1 if treatment started, 0 if censored
 FROM genomics_gold_standard;
+
+-- Join Genomic Mutation Data with Claims Treatment History
+CREATE OR REPLACE TABLE patient_360_genomics_gold AS
+SELECT 
+    p.patient_id,
+    g.biomarker_variant,
+    g.mutation_status,
+    c.treatment_line,
+    DATEDIFF('day', c.diagnosis_date, c.treatment_start_date) AS days_to_treatment,
+    c.event_observed -- 1 if treatment successful, 0 if censored
+FROM patient_registry p
+JOIN snowflake_genomics_lake g ON p.patient_id = g.patient_id
+JOIN claims_fact c ON p.patient_id = c.patient_id
+WHERE g.mutation_status = 'Positive';
