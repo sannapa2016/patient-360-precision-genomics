@@ -55,7 +55,7 @@ Based on the architecture in **{949964E1-9C55-4B0F-8660-0D1D48903FBD}.png**:
 
 ## Results Summary
 
-As demonstrated in the clinical output (**{65B6EDA4-7C8F-4B3D-8813-C95D439AA8A5}.png**), the model identified a statistically significant difference ($p = 0.0011$) in treatment durability for the KRAS-G12C mutation cohort compared to the Wild Type.
+As demonstrated in the clinical output, the model identified a statistically significant difference ($p = 0.0011$) in treatment durability for the KRAS-G12C mutation cohort compared to the Wild Type.
 
 This insight allows Pharma companies to:
 
