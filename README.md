@@ -23,3 +23,6 @@ Folder Hierarchy
 /data: Sample synthetic FHIR/Genomic datasets.
 
 /docs: JPG of the Kaplan-Meier plot generated in R.
+
+<img width="1151" height="515" alt="Rplot" src="https://github.com/user-attachments/assets/9789c9cc-7494-46c4-8fa9-975b6fab3f24" />
+
