@@ -44,7 +44,7 @@ Located in `/scripts`, the `survival_analysis.R` file performs high-science vali
 
 ## Folder Hierarchy
 
-Based on the architecture in **{949964E1-9C55-4B0F-8660-0D1D48903FBD}.png**:
+Based on the architecture in:
 
 * **`/sql`**: Snowflake schema definitions, ETL logic, and ZCC (Zero-Copy Cloning) scripts.
 
