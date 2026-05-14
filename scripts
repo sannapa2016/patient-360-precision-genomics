@@ -1,1 +1,25 @@
+# Load clinical libraries
+library(survival)
+library(survminer)
+library(dplyr)
 
+# 1. Load data from Snowflake (simulated here)
+df <- read.csv("precision_genomics_data.csv")
+
+# 2. Define the Survival Object
+# We analyze 'Time to Treatment Success' across different genetic variants
+surv_obj <- Surv(time = df$days_to_treatment, event = df$event_observed)
+
+# 3. Fit Kaplan-Meier Curve by Biomarker Variant
+fit <- survfit(surv_obj ~ biomarker_variant, data = df)
+
+# 4. Visualize the "Patient-360" Survival Impact
+ggsurvplot(fit, 
+           data = df, 
+           pval = TRUE, 
+           conf.int = TRUE,
+           risk.table = TRUE, 
+           title = "Treatment Durability by Genetic Variant",
+           xlab = "Days on Therapy",
+           ylab = "Survival Probability",
+           palette = c("#E7B800", "#2E9FDF"))
