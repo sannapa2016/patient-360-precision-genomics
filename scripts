@@ -23,3 +23,11 @@ ggsurvplot(fit,
            xlab = "Days on Therapy",
            ylab = "Survival Probability",
            palette = c("#E7B800", "#2E9FDF"))
+library(survival)
+library(survminer)
+
+# Fit Kaplan-Meier Curve by Genetic Variant
+fit <- survfit(Surv(days_to_treatment, event_observed) ~ biomarker_variant, data = df)
+
+# Visualize the Clinical Outcome
+ggsurvplot(fit, data = df, pval = TRUE, title = "Treatment Durability by Mutation Type")
