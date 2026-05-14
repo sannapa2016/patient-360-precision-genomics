@@ -36,8 +36,7 @@ Located in `/sql`, these scripts implement complex relational JOINs between semi
 Located in `/scripts`, the `survival_analysis.R` file performs high-science validation.
 
 * **Model:** Kaplan-Meier Survival Analysis comparing treatment success rates across genetic sub-populations (e.g., KRAS-G12C vs. Wild Type).
-* **Visualization:** Detailed survival curves with integrated Risk Tables and p-value calculations (as seen in **{65B6EDA4-7C8F-4B3D-8813-C95D439AA8A5}.png**).
-
+* **Visualization:** Detailed survival curves with integrated Risk Tables and p-value calculations.
 ### 3. Strategic Strategic Outcome
 
 * **HTA/FDA Readiness:** Provides the automated evidence needed to prove drug efficacy in specific genetic niches.
